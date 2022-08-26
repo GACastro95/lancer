@@ -15,7 +15,7 @@ yarn add
 This example can be run with `tsc-watch` to watch the files and automatically restart your bot.
 
 ```sh
-yarn run watch:start
+yarn watch:start
 ```
 
 ### Production
