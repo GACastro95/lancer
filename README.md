@@ -1,6 +1,6 @@
-# TypeScript Sapphire Bot example
+# Lancer
 
-This is a basic setup of a Discord bot using the [sapphire framework][sapphire] written in TypeScript
+This is a Discord bot using the [sapphire framework][sapphire] written in TypeScript
 
 ## How to use it?
 
