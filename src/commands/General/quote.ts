@@ -23,7 +23,7 @@ export class UserCommand extends Command {
     }
 
     public async chatInputRun(interaction: Command.ChatInputInteraction) {
-        const quote = interaction.options.getString('message')
+        const quote = interaction.options.getString('message-link')
         const messageProps = quote!.split('/').splice(4, 3)
         const guildId = messageProps[0]
         const channelId = messageProps[1]
