@@ -1,6 +1,6 @@
 import { ApplyOptions } from '@sapphire/decorators'
 import { Command } from '@sapphire/framework'
-import { TextBasedChannel, MessageEmbed } from 'discord.js';
+import { TextBasedChannel, MessageEmbed, ColorResolvable } from 'discord.js';
 
 @ApplyOptions<Command.Options>({
     aliases: ["q"],
@@ -40,20 +40,23 @@ export class UserCommand extends Command {
 
         const user = await guild.members.fetch(message.author.id)
 
-        console.log()
-
         var date = new Date(message.createdTimestamp)
 
         var hour = date.getUTCHours()
         var minutes = date.getUTCMinutes()
 
+        const attachments = message.attachments.map(e => e.proxyURL);
+
         var embed = new MessageEmbed()
             .setAuthor({ name: `${user.displayName} (${user.user.tag}) said...`, iconURL: `${user.displayAvatarURL()}` })
+            .setURL(quote!)
+            .setColor(user.displayColor as ColorResolvable)
             .setDescription(`${message.content}`)
             .addFields(
                 { name: `Source`, value: `[jump to message](${quote})`, inline: true }
             )
-            .setFooter({text: `${guild.name} • #${channelInfo!.name} • ${date.toLocaleDateString('ja-JP')} at ${hour}:${minutes} UTC`})
+            .setImage(attachments[0])
+            .setFooter({ text: `${guild.name} • #${channelInfo!.name} • ${date.toLocaleDateString('ja-JP')} at ${hour}:${minutes} UTC`, iconURL: guild!.iconURL()!  })
 
         return interaction.reply({ embeds: [embed] })
 
