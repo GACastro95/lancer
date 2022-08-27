@@ -6,7 +6,8 @@ import type { Message } from 'discord.js'
 @ApplyOptions<Command.Options>({
     aliases: ["es"],
     description: "steals an emoji given by the user",
-    generateDashLessAliases: true
+    generateDashLessAliases: true,
+    requiredUserPermissions: 'MANAGE_EMOJIS_AND_STICKERS'
 })
 export class UserCommand extends Command {
     public async messageRun(message: Message, args: Args) {

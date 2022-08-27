@@ -5,8 +5,7 @@ import type { TextChannel } from 'discord.js';
 @ApplyOptions<Command.Options>({
     aliases: ["r"],
     description: "creates a menu for users to add roles",
-    generateDashLessAliases: true,
-    requiredUserPermissions: 'MANAGE_ROLES'
+    generateDashLessAliases: true
 })
 export class UserCommand extends Command {
     public override registerApplicationCommands(registry: Command.Registry) {

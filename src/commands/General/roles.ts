@@ -6,6 +6,7 @@ import { MessageActionRow, MessageSelectMenu, MessageSelectOptionData, TextChann
     aliases: ["r"],
     description: "creates a menu for users to add roles",
     generateDashLessAliases: true,
+    requiredUserPermissions: 'MANAGE_ROLES'
 })
 export class UserCommand extends Command {
     public override registerApplicationCommands(registry: Command.Registry) {
