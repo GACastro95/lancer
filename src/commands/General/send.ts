@@ -3,9 +3,10 @@ import { Command } from '@sapphire/framework'
 import type { TextChannel } from 'discord.js';
 
 @ApplyOptions<Command.Options>({
-    aliases: ["r"],
-    description: "creates a menu for users to add roles",
-    generateDashLessAliases: true
+    aliases: ["s"],
+    description: "sends a message to a channel",
+    generateDashLessAliases: true,
+	preconditions: ['OwnerOnly'],
 })
 export class UserCommand extends Command {
     public override registerApplicationCommands(registry: Command.Registry) {
