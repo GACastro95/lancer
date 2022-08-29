@@ -36,7 +36,7 @@ export class UserCommand extends Subcommand {
                     command
                         .setName('global')
                         .setDescription('Get the global avatar of the user'))
-        )
+        );
     }
 
     public async globalAvatarMessage(message: Message) {
@@ -45,7 +45,7 @@ export class UserCommand extends Subcommand {
         const embed = new MessageEmbed()
             .setTitle("Global Avatar of " + user.tag)
             .setImage(user.displayAvatarURL({ dynamic: true }))
-            .setColor("#5865F2")
+            .setColor("#5865F2");
 
         return send(message, { embeds: [embed] });
     }
@@ -56,33 +56,33 @@ export class UserCommand extends Subcommand {
         const embed = new MessageEmbed()
             .setTitle("Global Avatar of " + user.tag)
             .setImage(user.displayAvatarURL({ dynamic: true }))
-            .setColor("#5865F2")
+            .setColor("#5865F2");
 
         return interaction.reply({ embeds: [embed] });
     }
 
     public async serverAvatarMessage(message: Message) {
-        const guild = message.guild
+        const guild = message.guild;
         const user = message.author;
-        const guildUser = guild?.members.cache.get(user.id)
+        const guildUser = guild?.members.cache.get(user.id);
 
         const embed = new MessageEmbed()
             .setTitle("Server Avatar of " + `${guildUser?.nickname} (${user.tag})` ?? user.tag)
             .setImage(guildUser?.displayAvatarURL({ dynamic: true }) ?? user.displayAvatarURL({ dynamic: true }))
-            .setColor(guildUser?.displayColor as ColorResolvable)
+            .setColor(guildUser?.displayColor as ColorResolvable);
 
         return send(message, { embeds: [embed] });
     }
 
     public async serverAvatarInteraction(interaction: Subcommand.ChatInputInteraction) {
-        const guild = interaction.guild
+        const guild = interaction.guild;
         const user = interaction.user;
-        const guildUser = guild?.members.cache.get(user.id)
+        const guildUser = guild?.members.cache.get(user.id);
 
         const embed = new MessageEmbed()
             .setTitle("Server Avatar of " + `${guildUser?.nickname} (${user.tag})` ?? user.tag)
             .setImage(guildUser?.displayAvatarURL({ dynamic: true }) ?? user.displayAvatarURL({ dynamic: true }))
-            .setColor(guildUser?.displayColor as ColorResolvable)
+            .setColor(guildUser?.displayColor as ColorResolvable);
 
         return interaction.reply({ embeds: [embed] });
     }
