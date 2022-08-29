@@ -39,18 +39,17 @@ export class UserCommand extends Command {
 				force: true
 			});
 			const user = await guild.members.fetch(message.author.id);
-			const attachments = message.attachments.map((e) => e.proxyURL);
+			const attachments = message.attachments.map((e) => e.url);
 			const sticker = message.stickers.first()?.url;
 			var embed;
 
-			console.log(message);
-
 			if (message.embeds.length > 0) {
 				embed = message.embeds[0];
+                console.log(embed)
 				embed
-					.setTitle(`${embed.author?.name}`)
-					.setImage(embed.image?.proxyURL ?? embed.thumbnail?.proxyURL ?? '')
-					.setThumbnail(`${embed.author?.iconURL}`)
+					.setTitle(`${embed.author?.name ?? ''}`)
+					.setImage(embed.image?.proxyURL ?? embed.thumbnail?.url ?? '')
+					.setThumbnail(`${embed.author?.proxyIconURL ?? ''}`)
 					.setAuthor({ name: `${user.displayName} (${user.user.tag}) posted...`, iconURL: `${user.displayAvatarURL()}` });
 				if (embed.url) {
 					embed.setFields({ name: `Source`, value: `[go to link](${embed.url})` }).setURL('');
@@ -65,12 +64,23 @@ export class UserCommand extends Command {
 					.setURL(quote!)
 					.setColor(user.displayColor as ColorResolvable)
 					.setDescription(`${message.content}`)
-					.addFields({ name: `Source`, value: `[jump to message](${quote})`, inline: true })
 					.setImage(sticker ?? attachments[0])
 					.setFooter({
 						text: `${guild.name} • #${channelInfo!.name} • ${date.toLocaleDateString('ja-JP')} at ${hour}:${minutes} UTC`,
 						iconURL: guild!.iconURL()!
 					});
+
+                    if (message.reference) {
+                        var reply = await message.fetchReference();
+                        embed.addFields(
+                            { name: `Replying to`, value: `[${reply.content}](${reply.url})` },
+                            { name: `Source`, value: `[jump to message](${quote})`, inline: true }
+                        )
+                    } else {
+                        embed.addFields(
+                            { name: `Source`, value: `[jump to message](${quote})`, inline: true }
+                        )
+                    }
 			}
 
 			return interaction.reply({ embeds: [embed] });
