@@ -39,16 +39,17 @@ export class UserCommand extends Command {
 				force: true
 			});
 			const user = await guild.members.fetch(message.author.id);
-			const attachments = message.attachments.map((e) => e.proxyURL);
+			const attachments = message.attachments.map((e) => e.url);
 			const sticker = message.stickers.first()?.url;
 			var embed;
 
 			if (message.embeds.length > 0) {
 				embed = message.embeds[0];
+                console.log(embed)
 				embed
-					.setTitle(`${embed.author?.name}`)
-					.setImage(embed.image?.proxyURL ?? embed.thumbnail?.proxyURL ?? '')
-					.setThumbnail(`${embed.author?.iconURL}`)
+					.setTitle(`${embed.author?.name ?? ''}`)
+					.setImage(embed.image?.proxyURL ?? embed.thumbnail?.url ?? '')
+					.setThumbnail(`${embed.author?.proxyIconURL ?? ''}`)
 					.setAuthor({ name: `${user.displayName} (${user.user.tag}) posted...`, iconURL: `${user.displayAvatarURL()}` });
 				if (embed.url) {
 					embed.setFields({ name: `Source`, value: `[go to link](${embed.url})` }).setURL('');
