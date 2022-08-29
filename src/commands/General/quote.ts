@@ -43,8 +43,6 @@ export class UserCommand extends Command {
 			const sticker = message.stickers.first()?.url;
 			var embed;
 
-			console.log(message);
-
 			if (message.embeds.length > 0) {
 				embed = message.embeds[0];
 				embed
@@ -65,12 +63,23 @@ export class UserCommand extends Command {
 					.setURL(quote!)
 					.setColor(user.displayColor as ColorResolvable)
 					.setDescription(`${message.content}`)
-					.addFields({ name: `Source`, value: `[jump to message](${quote})`, inline: true })
 					.setImage(sticker ?? attachments[0])
 					.setFooter({
 						text: `${guild.name} • #${channelInfo!.name} • ${date.toLocaleDateString('ja-JP')} at ${hour}:${minutes} UTC`,
 						iconURL: guild!.iconURL()!
 					});
+
+                    if (message.reference) {
+                        var reply = await message.fetchReference();
+                        embed.addFields(
+                            { name: `Replying to`, value: `[${reply.content}](${reply.url})` },
+                            { name: `Source`, value: `[jump to message](${quote})`, inline: true }
+                        )
+                    } else {
+                        embed.addFields(
+                            { name: `Source`, value: `[jump to message](${quote})`, inline: true }
+                        )
+                    }
 			}
 
 			return interaction.reply({ embeds: [embed] });
