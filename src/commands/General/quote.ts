@@ -41,15 +41,10 @@ export class UserCommand extends Command {
 			const user = await guild.members.fetch(message.author.id);
 			const attachments = message.attachments.map((e) => e.url);
 			const sticker = message.stickers.first()?.url;
-			var imageURL;
 			var embed;
 
 			if (message.embeds.length > 0) {
 				embed = message.embeds[0];
-				if (embed.image != null) {
-					imageURL = embed.image.proxyURL;
-
-				}
 			}
 
 			var date = new Date(message.createdTimestamp);
@@ -61,7 +56,7 @@ export class UserCommand extends Command {
 				.setURL(quote!)
 				.setColor(user.displayColor as ColorResolvable)
 				.setDescription(`${message.content}`)
-				.setImage(imageURL ?? sticker ?? attachments[0])
+				.setImage(embed?.image?.proxyURL ?? sticker ?? attachments[0])
 				.setFooter({
 					text: `${guild.name} • #${channelInfo!.name} • ${date.toLocaleDateString('ja-JP')} at ${hour}:${minutes} UTC`,
 					iconURL: guild!.iconURL()!
